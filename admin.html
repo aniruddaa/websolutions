@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Admin Dashboard - Admit5ion Walait Services">
+    <title>Admin Dashboard - Admit5ion Walait Services</title>
+    <link rel="stylesheet" href="admin-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Admin Navigation -->
+    <nav class="admin-navbar">
+        <div class="admin-navbar-content">
+            <div class="admin-logo">
+                <h2>Admin Dashboard</h2>
+            </div>
+            <ul class="admin-nav-links">
+                <li><a href="#dashboard" class="nav-link active" data-section="dashboard">Dashboard</a></li>
+                <li><a href="#inquiries" class="nav-link" data-section="inquiries">Inquiries</a></li>
+                <li><a href="#team" class="nav-link" data-section="team">Team Members</a></li>
+                <li><a href="#" class="nav-link logout-btn" id="logoutBtn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-menu">
+                <div class="menu-item active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="menu-item" data-section="inquiries">
+                    <i class="fas fa-envelope"></i>
+                    <span>Inquiries</span>
+                    <span class="badge" id="inquiries-badge">0</span>
+                </div>
+                <div class="menu-item" data-section="team">
+                    <i class="fas fa-users"></i>
+                    <span>Team Members</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="admin-section active">
+                <div class="section-header">
+                    <h1>Dashboard</h1>
+                    <p>Welcome to your admin panel</p>
+                </div>
+
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #e3f2fd;">
+                            <i class="fas fa-envelope" style="color: #0066cc;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Total Inquiries</h3>
+                            <p class="stat-number" id="total-inquiries">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #f3e5f5;">
+                            <i class="fas fa-users" style="color: #9c27b0;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Team Members</h3>
+                            <p class="stat-number" id="total-team">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #fff3e0;">
+                            <i class="fas fa-check-circle" style="color: #ff9800;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>New Inquiries</h3>
+                            <p class="stat-number" id="new-inquiries">0</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background: #e8f5e9;">
+                            <i class="fas fa-inbox" style="color: #4caf50;"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3>Read Inquiries</h3>
+                            <p class="stat-number" id="read-inquiries">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-info">
+                    <h2>Quick Start</h2>
+                    <ul>
+                        <li>✅ View and manage client inquiries</li>
+                        <li>✅ Add team members with photos</li>
+                        <li>✅ Delete inquiries after resolving</li>
+                        <li>✅ Mark inquiries as read/unread</li>
+                        <li>✅ Edit team member details</li>
+                        <li>✅ Remove team members</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Inquiries Section -->
+            <section id="inquiries" class="admin-section">
+                <div class="section-header">
+                    <h1>Client Inquiries</h1>
+                    <div class="header-actions">
+                        <button class="btn-secondary" id="filterBtn">
+                            <i class="fas fa-filter"></i> Filter
+                        </button>
+                        <button class="btn-secondary" id="refreshBtn">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="filter-panel" id="filterPanel" style="display: none;">
+                    <label>
+                        <input type="checkbox" value="all" checked> All
+                    </label>
+                    <label>
+                        <input type="checkbox" value="unread"> Unread Only
+                    </label>
+                    <label>
+                        <input type="checkbox" value="read"> Read Only
+                    </label>
+                </div>
+
+                <!-- Inquiries List -->
+                <div class="inquiries-list" id="inquiriesList">
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>No inquiries yet</p>
+                        <small>Client inquiries will appear here</small>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Team Section -->
+            <section id="team" class="admin-section">
+                <div class="section-header">
+                    <h1>Team Members</h1>
+                    <button class="btn-primary" id="addTeamBtn">
+                        <i class="fas fa-plus"></i> Add Team Member
+                    </button>
+                </div>
+
+                <!-- Add/Edit Team Member Form -->
+                <div class="team-form" id="teamForm" style="display: none;">
+                    <h2 id="formTitle">Add Team Member</h2>
+                    <form id="memberForm">
+                        <div class="form-group">
+                            <label>Name *</label>
+                            <input type="text" id="memberName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Position *</label>
+                            <input type="text" id="memberPosition" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Experience/Bio *</label>
+                            <textarea id="memberBio" rows="3" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Photo *</label>
+                            <div class="file-upload">
+                                <input type="file" id="memberPhoto" accept="image/*" required>
+                                <p>Click to upload or drag and drop</p>
+                                <small>Max size: 5MB (JPEG, PNG, WebP)</small>
+                            </div>
+                            <div id="photoPreview" class="photo-preview" style="display: none;">
+                                <img id="previewImg" src="" alt="Preview">
+                                <button type="button" class="btn-small" onclick="clearPhoto()">Remove</button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Save Member</button>
+                            <button type="button" class="btn-secondary" onclick="closeTeamForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Team Members Grid -->
+                <div class="team-grid" id="teamGrid">
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No team members yet</p>
+                        <button class="btn-primary" onclick="openTeamForm()">Add First Team Member</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Inquiry Modal -->
+    <div class="modal" id="inquiryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Inquiry Details</h2>
+                <button class="close-btn" onclick="closeInquiryModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeInquiryModal()">Close</button>
+                <button class="btn-danger" id="deleteInquiryBtn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
